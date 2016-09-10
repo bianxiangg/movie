@@ -6,4 +6,16 @@ block content
             form.form-horizontal(method="post", action="/admin/movie/new")
                 .form-group
                     label.col-sm-3.control-label(for="inputTitle") 电影名字
-                        input#inputTitle.form-control(type="text", name="movie[title]", value="#{movie.name}")   
+                        input#inputTitle.form-control(type="text", name="movie[title]", value="#{movie.name}") 
+                .form-group
+                    label.col-sm-3.control-label(for="language") 语种
+                        input#language.form-control(type="text", name="movie[language]", value="#{movie.language}") 
+                .form-group
+                    label.col-sm-3.control-label(for="country") 国家
+                        input#country.form-control(type="text", name="movie[country]", value="#{movie.country}")
+                .form-group
+                    label.col-sm-3.control-label(for="year") 上映年份
+                        input#year.form-control(type="text", name="movie[year]", value="#{movie.year}")
+                .form-group
+                    label.col-sm-3.control-label(for="summary") 简介
+                        input#summary.form-control(type="text", name="movie[summary]", value="#{movie.summary}") 
