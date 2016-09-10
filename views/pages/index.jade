@@ -1,4 +1,4 @@
-extend ../layout
+extends ../layout
 
 block content
     .container
@@ -6,7 +6,7 @@ block content
             each item in movies
                 .col-md-2
                     .thumbnail
-                        a(href="/movic/#{item._id}")
+                        a(href="/movie/#{item._id}")
                             img(src="#{item.poster}", alt="#{item.title}")
                         .caption
                             h3 #{item.title}
