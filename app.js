@@ -9,7 +9,7 @@ app.listen(port);
 console.log('imooc start on port', port);
 
 app.get('/', function (req, res) {
-    res.render('index', {
+    res.render('pages/index', {
         title: 'imooc 首页'
     });
 });
