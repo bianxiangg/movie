@@ -56,7 +56,16 @@ app.get('/admin/movie', function (req, res) {
 
 app.get('/admin/list', function (req, res) {
     res.render('pages/list', {
-        title: 'imooc 列表页'
+        title: 'imooc 列表页',
+        movies: [{
+            title: '我开始了',
+            doctor: '沉默的羔羊',
+            country: '美国',
+            year: 2016,
+            meta: {
+                createAt: 20160501
+            }
+        }]
     });
 });
 
