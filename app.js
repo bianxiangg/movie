@@ -4,9 +4,7 @@ var port = process.env.PORT || 3000;
 
 app.set('views', './views');
 app.set('view engine', 'jade');
-
-app.use(express.static('publics'));
-app.use(express.static('jss'));
+app.use(express.static('js'));
 app.listen(port);
 app.locals.pretty = true;
 console.log('imooc start on port', port);
