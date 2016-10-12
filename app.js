@@ -4,7 +4,9 @@ var port = process.env.PORT || 3000;
 
 app.set('views', './views');
 app.set('view engine', 'jade');
-app.use(express.static('js'));
+
+app.use(express.static('publics'));
+app.use(express.static('jss'));
 app.listen(port);
 app.locals.pretty = true;
 console.log('imooc start on port', port);
@@ -89,7 +91,7 @@ app.get('/admin/movie', function (req, res) {
 });
 
 app.get('/admin/list', function (req, res) {
-    res.render('pages/list', {
+    res.render('pages/list.jade', {
         title: 'imooc 列表页',
         movies: [{
             title: '我开始了',
@@ -129,6 +131,10 @@ app.get('/admin/list', function (req, res) {
             }
         ]
     });
+});
+
+app.get('testh', function (req, res) {
+    res.render('pages/list.html');
 });
 
 
