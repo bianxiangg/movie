@@ -21,7 +21,6 @@ block content
                             td #{item.doctor}
                             td #{item.country}
                             td #{item.year}
-                            td #{moment(item.meta.createAt).format('MM/DD/YYYY')}
                             td #{item.meta}
                             td: a(target="_blank", href="/detail/#{item._id}") 查看 
                             td: a(target="_blank", href="/admin/update/#{item._id}") 更新 
