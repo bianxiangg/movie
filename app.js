@@ -14,41 +14,11 @@ app.locals.pretty = true;
 console.log('imooc start on port', port);
 
 app.get('/', function (req, res) {
-    res.render('pages/index', {
-        title: 'imooc 首页',
-        movies: [
-            {
-                _id: 1,
-                title: '泰坦尼克号',
-                poster: 'http://ch.sratim.co.il/photos/titles/normal/0/m56950_20130830195300_141716753457.jpg',
-
-            },
-            {
-                _id: 1,
-                title: '泰坦尼克号',
-                poster: 'http://ch.sratim.co.il/photos/titles/normal/0/m56950_20130830195300_141716753457.jpg',
-
-            },
-            {
-                _id: 1,
-                title: '泰坦尼克号',
-                poster: 'http://ch.sratim.co.il/photos/titles/normal/0/m56950_20130830195300_141716753457.jpg',
-
-            },
-            {
-                _id: 1,
-                title: '泰坦尼克号',
-                poster: 'http://ch.sratim.co.il/photos/titles/normal/0/m56950_20130830195300_141716753457.jpg',
-
-            },
-            {
-                _id: 1,
-                title: '泰坦尼克号',
-                poster: 'http://ch.sratim.co.il/photos/titles/normal/0/m56950_20130830195300_141716753457.jpg',
-
-            }
-        ],
-
+    Movie.find({}, function (err, docs) {
+        res.render('pages/index', {
+            title: 'imooc 首页',
+            movies: docs
+        });
     });
 });
 
