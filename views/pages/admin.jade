@@ -6,7 +6,7 @@ block content
             form.form-horizontal(method="post", action="/admin/movie/new")
                 .form-group
                     label.col-sm-3.control-label(for="inputTitle") 电影名字
-                        input#inputTitle.form-control(type="text", name="movie[title]", value="#{movie.name}") 
+                    input#inputTitle.form-control.col-sm-5(type="text", name="movie[title]", value="#{movie.name}") 
                 .form-group
                     label.col-sm-3.control-label(for="language") 语种
                         input#language.form-control(type="text", name="movie[language]", value="#{movie.language}") 
