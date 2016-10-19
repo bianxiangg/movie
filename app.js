@@ -4,7 +4,7 @@ var port = process.env.PORT || 3000;
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
 
-var Movie = require('./models/movies.js');
+var Movie = require('./models/movie.js');
 
 app.set('views', './views');
 app.set('view engine', 'jade');
