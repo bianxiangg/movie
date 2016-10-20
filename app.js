@@ -2,6 +2,8 @@ var express = require('express');
 var app = express();
 var port = process.env.PORT || 3000;
 var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
+var _ = require('underscore');
 mongoose.connect('mongodb://localhost/test');
 
 var Movie = require('./models/movie.js');
@@ -9,12 +11,14 @@ var Movie = require('./models/movie.js');
 app.set('views', './views');
 app.set('view engine', 'jade');
 app.use(express.static('js'));
+app.use(bodyParser.urlencoded({extent: false}));
 app.listen(port);
 app.locals.pretty = true;
+app.locals.moment = require('moment');
 console.log('imooc start on port', port);
 
 app.get('/', function (req, res) {
-    Movie.find({}, function (err, docs) {
+    Movie.fetch(function (err, docs) {
         res.render('pages/index', {
             title: 'imooc 首页',
             movies: docs
@@ -23,23 +27,15 @@ app.get('/', function (req, res) {
 });
 
 app.get('/detail/:id', function (req, res) {
-    res.render('pages/detail', {
-        title: 'imooc 详情页',
-        movies: [
-            {
-                _id: 1,
-                title: '泰坦尼克号'
-            }
-        ],
-        movie: {
-            flash: 'http://player.youku.com/player.php/sid/XMTcyNjE4NzE4OA==/v.swf',
-            title: '机械战警',
-            doctor: 'XXXX、',
-            country: '米国',
-            language: '英语',
-            year: 2016,
-            summary: '挺好看的一电影'
+    var id = req.params.id;
+    Movie.findById(id, function (err, docs) {
+        if (err) {
+            console.log('has error: ', err);
         }
+        res.render('pages/detail', {
+            title: 'imooc 详情页',
+            movie: docs
+        });
     });
 });
 
@@ -63,50 +59,29 @@ app.get('/admin/movie', function (req, res) {
 });
 
 app.get('/admin/list', function (req, res) {
-    res.render('pages/list.jade', {
-        title: 'imooc 列表页',
-        movies: [{
-            title: '我开始了',
-            doctor: '沉默的羔羊',
-            country: '美国',
-            year: 2016,
-            meta: {
-                createAt: 20160501
-            }
-        },
-            {
-                title: '我开始了',
-                doctor: '沉默的羔羊',
-                country: '美国',
-                year: 2016,
-                meta: {
-                    createAt: 20160501
-                }
-            },
-            {
-                title: '我开始了',
-                doctor: '沉默的羔羊',
-                country: '美国',
-                year: 2016,
-                meta: {
-                    createAt: 20160501
-                }
-            },
-            {
-                title: '我开始了',
-                doctor: '沉默的羔羊',
-                country: '美国',
-                year: 2016,
-                meta: {
-                    createAt: 20160501
-                }
-            }
-        ]
+    Movie.fetch(function (err, docs) {
+        res.render('pages/list', {
+            title: 'imooc 首页',
+            movies: docs
+        });
     });
 });
 
 app.get('testh', function (req, res) {
     res.render('pages/list.html');
+});
+
+app.post('/admin/movie/new', function (req, res) {
+    console.log(req.body);
+    newMovie = req.body.movie;
+    var movie = new Movie();
+    movie = _.extend(movie, newMovie);
+    movie.save(function (err, doc) {
+        res.render('pages/detail', {
+            title: '新的电影',
+            movie: doc
+        });
+    });
 });
 
 
