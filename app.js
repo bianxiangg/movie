@@ -77,10 +77,7 @@ app.post('/admin/movie/new', function (req, res) {
     var movie = new Movie();
     movie = _.extend(movie, newMovie);
     movie.save(function (err, doc) {
-        res.render('pages/detail', {
-            title: '新的电影',
-            movie: doc
-        });
+        res.redirect('/detail/' + doc._id);
     });
 });
 
