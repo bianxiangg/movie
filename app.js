@@ -42,19 +42,7 @@ app.get('/detail/:id', function (req, res) {
 app.get('/admin/movie', function (req, res) {
     res.render('pages/admin', {
         title: 'imooc 后台录入页',
-        movies: [
-            {
-                _id: 1,
-                title: '泰坦尼克号'
-            }
-        ],
-        movie: {
-            name: '真是的谎言',
-            language: '英语',
-            country: '美国',
-            year: 1998,
-            summary: '战斗场面火爆'
-        }
+        movie: {}
     });
 });
 
@@ -79,6 +67,38 @@ app.post('/admin/movie/new', function (req, res) {
     movie.save(function (err, doc) {
         res.redirect('/detail/' + doc._id);
     });
+});
+
+app.delete('/admin/list', function (req, res) {
+    var id = req.query.id;
+    console.log(id);
+    console.log(id !== undefined);
+    if (id !== undefined){
+        console.log('before remove');
+        Movie.remove({_id: id}, function (err, movie) {
+            if (err) {
+                console.log(err);
+            }
+
+            res.json({
+                "success": 1
+            });
+        });
+        console.log('after remove');
+
+    }
+});
+
+app.get('/admin/update/:id', function (req, res) {
+    var id = req.params.id;
+    if (id) {
+        Movie.findById(id, function (err, movie) {
+            res.render('pages/admin', {
+                title: '更新电影数据',
+                movie: movie
+            });
+        });
+    }
 });
 
 
