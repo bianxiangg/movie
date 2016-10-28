@@ -99,7 +99,7 @@ app.get('/admin/update/:id', function (req, res) {
             });
         });
     }
-});
+}); 
 
 
 

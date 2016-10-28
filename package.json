@@ -12,6 +12,11 @@
   "version": "1.0.0",
   "main": "app.js",
   "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-concurrent": "^2.3.1",
+    "grunt-contrib-nodemon": "^0.5.4",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-nodemon": "^0.4.2",
     "jshint": "^2.9.3"
   },
   "scripts": {
