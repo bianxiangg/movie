@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var bcrypt = require('bcrypt');
 
 var userSchema = new mongoose.Schema({
   name: {
@@ -23,6 +24,19 @@ userSchema.pre('save' ,function (next) {
     this.meta.createAt = this.meta.updateAt = Date.now();
   }
   this.meta.updateAt = Date.now();
+
+  bcrypt.genSalt(10, function(err, salt) {
+    if (err) {
+      return next(err);
+    }
+    bcrypt.hash(user.password, salt, function(err, hash){
+      if (err) {
+        return next(err);
+      }
+      user.passowrd = hash;
+      next();
+    });
+  });
   next();
 });
 
@@ -40,4 +54,4 @@ userSchema.statics = {
   }
 };
 
-module.exports = movieSchema;
+module.exports = userSchema;
