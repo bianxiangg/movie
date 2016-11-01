@@ -7,6 +7,7 @@ var _ = require('underscore');
 mongoose.connect('mongodb://localhost/test');
 
 var Movie = require('./models/movie.js');
+var User = require('./models/user.js');
 
 app.set('views', './views');
 app.set('view engine', 'jade');
@@ -100,6 +101,43 @@ app.get('/admin/update/:id', function (req, res) {
         });
     }
 }); 
+
+
+/**
+ * 用户注册
+ */
+app.post('/user/signup', function(req, res) {
+    var _user = req.body.user;
+    var user = new User(_user);
+    User.findById(user.id, function(err, userOld) {
+        if (err) {
+            console.log(err);
+        }
+        if (userOld) {
+           return res.redirect('/user/list');
+        }
+        user.save(function(err, user) {
+            if (err) {
+                console.log(err);
+            }
+            res.redirect('/user/list');
+        });
+    });
+});
+
+/**
+ * 用户列表展示
+ */
+app.get('/user/list', function(req, res) {
+    User.fetch(function(err, users) {
+        if (err) {
+            console.log(err);
+        }
+        res.render('pages/userlist', {
+            users: users 
+            });
+    });
+});
 
 
 

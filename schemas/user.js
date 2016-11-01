@@ -1,12 +1,12 @@
 var mongoose = require('mongoose');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 
 var userSchema = new mongoose.Schema({
   name: {
     type: String,
     unique: true
   },
-  passowrd: String,
+  password: String,
   meta: {
     createAt: {
       type: Date,
@@ -24,7 +24,7 @@ userSchema.pre('save' ,function (next) {
     this.meta.createAt = this.meta.updateAt = Date.now();
   }
   this.meta.updateAt = Date.now();
-
+  var user = this;
   bcrypt.genSalt(10, function(err, salt) {
     if (err) {
       return next(err);
@@ -33,11 +33,10 @@ userSchema.pre('save' ,function (next) {
       if (err) {
         return next(err);
       }
-      user.passowrd = hash;
+      user.password = hash;
       next();
     });
   });
-  next();
 });
 
 userSchema.statics = {
