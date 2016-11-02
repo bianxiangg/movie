@@ -39,6 +39,11 @@ userSchema.pre('save' ,function (next) {
   });
 });
 
+userSchema.methods.validateUser = function(password) {
+  return bcrypt.compareSync(password, this.password);
+};
+
+
 userSchema.statics = {
   fetch: function (cb) {
     return this

@@ -18,7 +18,8 @@
     "grunt-contrib-nodemon": "^0.5.4",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-nodemon": "^0.4.2",
-    "jshint": "^2.9.3"
+    "jshint": "^2.9.3",
+    "morgan": "^1.7.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

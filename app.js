@@ -3,6 +3,7 @@ var app = express();
 var port = process.env.PORT || 3000;
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var morgan = require('morgan');
 var _ = require('underscore');
 mongoose.connect('mongodb://localhost/test');
 
@@ -11,6 +12,7 @@ var User = require('./models/user.js');
 
 app.set('views', './views');
 app.set('view engine', 'jade');
+app.use(morgan('dev'));
 app.use(express.static('js'));
 app.use(bodyParser.urlencoded({extent: false}));
 app.listen(port);
@@ -139,6 +141,33 @@ app.get('/user/list', function(req, res) {
     });
 });
 
+
+/**
+ * 登陆验证
+ */
+app.post('/user/signin', function(req, res) {
+    var _user = req.body.user;
+    var name = _user.name;
+    var password = _user.password;
+
+    User.findOne({name: name}, function(err, user) {
+        if (err) {
+            console.log('登陆过程中查找用户出错，', err);
+        }
+        if (!user) {
+            return res.redirect('/');
+        }
+
+        var isMatch = user.validateUser(password);
+        console.log(isMatch);
+        if (isMatch) {
+            console.log(user.name, '登陆了');
+            res.redirect('/');
+        } else {
+            res.redirect('/');
+        }
+    });
+});
 
 
 
