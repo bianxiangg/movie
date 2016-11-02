@@ -5,6 +5,9 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var _ = require('underscore');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var mongoStore = require('connect-mongo')(session);
 mongoose.connect('mongodb://localhost/test');
 
 var Movie = require('./models/movie.js');
@@ -13,6 +16,13 @@ var User = require('./models/user.js');
 app.set('views', './views');
 app.set('view engine', 'jade');
 app.use(morgan('dev'));
+app.use(cookieParser());
+app.use(session({
+    secret: 'imooc',
+    store: new mongoStore({
+        mongooseConnection: mongoose.connection
+    })
+}));
 app.use(express.static('js'));
 app.use(bodyParser.urlencoded({extent: false}));
 app.listen(port);
@@ -21,6 +31,7 @@ app.locals.moment = require('moment');
 console.log('imooc start on port', port);
 
 app.get('/', function (req, res) {
+    console.log('already have session: ', req.session.user);
     Movie.fetch(function (err, docs) {
         res.render('pages/index', {
             title: 'imooc 首页',
@@ -162,6 +173,7 @@ app.post('/user/signin', function(req, res) {
         console.log(isMatch);
         if (isMatch) {
             console.log(user.name, '登陆了');
+            req.session.user = user;
             res.redirect('/');
         } else {
             res.redirect('/');

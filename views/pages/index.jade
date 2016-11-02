@@ -7,7 +7,7 @@ block content
                 .col-md-2
                     .thumbnail
                         a(href="/movie/#{item._id}")
-                            img(src="#{item.poster}", alt="#{item.title}")
+                            img(src=item.poster, alt="#{item.title}")
                         .caption
                             h3 #{item.title}
                             p: a.btn.btn-primary(href="/detail/#{item._id}", role="button") 观看预告片
