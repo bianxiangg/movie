@@ -30,6 +30,22 @@ app.locals.pretty = true;
 app.locals.moment = require('moment');
 console.log('imooc start on port', port);
 
+
+//如果用户处于登陆状态，显示欢迎界面
+app.use(function (req, res, next) {
+    var user = req.session.user;
+    app.locals.user = user;
+    next();
+});
+
+/**
+ * 退出功能
+ */
+app.get('/logout', function (req, res) {
+    delete req.session.user;
+    res.redirect('/');
+});
+
 app.get('/', function (req, res) {
     console.log('already have session: ', req.session.user);
     Movie.fetch(function (err, docs) {
