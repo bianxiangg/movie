@@ -36,7 +36,7 @@ exports.list = function  (req, res) {
 };
 
 exports.signIn = function (req, res) {
-  var _user = req.body.user;
+    var _user = req.body.user;
       var name = _user.name;
       var password = _user.password;
 
@@ -58,5 +58,17 @@ exports.signIn = function (req, res) {
               res.redirect('/');
           }
       });
+};
+
+exports.showSignin = function (req, res) {
+    res.render('pages/signin', {
+        title: '注册'
+    });
+};
+
+exports.showSignup = function (req, res) {
+    res.render('pages/signup', {
+        title: '登陆'
+    });
 };
 

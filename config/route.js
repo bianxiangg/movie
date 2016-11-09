@@ -34,10 +34,17 @@ module.exports = function (app) {
    * 用户列表展示
    */
   app.get('/user/list', User.list);
-
-
   /**
    * 登陆验证
    */
   app.post('/user/signIn', User.signIn);
+  /**
+   * 显示注册页面
+   */
+  app.get('/signup', User.showSignup);
+  
+  /**
+   * 显示登陆页面
+   */
+  app.get('/signin', User.showSignin);
 };
